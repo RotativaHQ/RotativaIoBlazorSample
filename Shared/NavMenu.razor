@@ -1,4 +1,13 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject IJSRuntime JS
+@code {
+    private async Task DownloadFileFromURL(string name)
+    {
+        var fileURL = "Pdf/" + name;
+        await JS.InvokeVoidAsync("triggerFileDownload", name, fileURL);
+    }
+}
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">RotativaIoBlazorSample</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -22,6 +31,26 @@
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="fetchdata">
                 <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="@( e => DownloadFileFromURL("Index"))">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> View PDF
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="@( e => DownloadFileFromURL("About"))">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Download PDF
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="@( e => DownloadFileFromURL("Data"))">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> View Data PDF
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" @onclick="@( e => DownloadFileFromURL("DownloadData"))">
+                <span class="oi oi-list-rich" aria-hidden="true"></span> Download Data PDF
             </NavLink>
         </div>
     </nav>

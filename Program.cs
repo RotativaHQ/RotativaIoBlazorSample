@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Rotativaio.AspNetCore;
 using RotativaIoBlazorSample.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+var rotativaIoUrl = builder.Configuration.GetValue<string>("RotativaIoUrl") ?? string.Empty;
+var rotativaApiKey = builder.Configuration.GetValue<string>("RotativaApiKey") ?? string.Empty; 
+
+builder.Services.AddRotativaIo(rotativaIoUrl, rotativaApiKey);
 
 var app = builder.Build();
 
@@ -24,6 +30,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.MapControllerRoute("mvc", "{controller}/{action}");
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
